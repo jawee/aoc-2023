@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 )
@@ -17,13 +16,6 @@ func createMatrix(lines []string) [][]string {
 
 
 
-// func TestIsDigit(t *testing.T) {
-//     str := "*"
-//
-//     if isDigit(str) {
-//         t.Fatalf("Shouldn't be true\n")
-//     }
-// }
 func TestGetNumber(t *testing.T) {
     strArr := []string { 
         "467.",
@@ -113,18 +105,13 @@ func TestB(t *testing.T) {
         },
     }
 
-    for i, v := range testCases {
-        fmt.Printf("=================================\n")
-        fmt.Printf("TestCase %d\n", i)
+    for _, v := range testCases {
         matrix := createMatrix(v.lines)
         sum := calculateSumB(matrix)
 
         if sum != v.expected {
             t.Errorf("Expected '%d', got '%d'\n", v.expected, sum)
-        } else {
-            fmt.Printf("PASS\n")
-        }
-        fmt.Printf("=================================\n")
+        } 
     }
 }
 
@@ -239,8 +226,7 @@ func TestA(t *testing.T) {
             expected: 219,
         },
     }
-    for i, v := range testCases {
-        fmt.Printf("TestCase %d\n", i)
+    for _, v := range testCases {
         matrix := createMatrix(v.lines)
         sum := calculateSumA(matrix)
 
