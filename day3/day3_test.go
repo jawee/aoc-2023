@@ -17,7 +17,118 @@ func createMatrix(lines []string) [][]string {
 
 
 
-func Test1(t *testing.T) {
+// func TestIsDigit(t *testing.T) {
+//     str := "*"
+//
+//     if isDigit(str) {
+//         t.Fatalf("Shouldn't be true\n")
+//     }
+// }
+func TestGetNumber(t *testing.T) {
+    strArr := []string { 
+        "467.",
+    }
+    matrix := createMatrix(strArr)
+    val := readNumberInPos(0,2,matrix)
+
+    if val != 467 {
+        t.Fatalf("Expected '467', got '%d'\n", val)
+    }
+}
+
+func TestGetNumber2(t *testing.T) {
+    strArr := []string { 
+        "..35",
+    }
+    matrix := createMatrix(strArr)
+    val := readNumberInPos(0,3,matrix)
+
+    if val != 35 {
+        t.Fatalf("Expected '35', got '%d'\n", val)
+    }
+}
+
+func TestB(t *testing.T) {
+    testCases := []struct {
+        lines    []string
+        expected int
+    }{
+        {
+            []string{
+                "...*4",
+                ".....",
+            },
+            0,
+        },
+        {
+            []string{
+                "...*4.",
+                "......",
+            },
+            0,
+        },
+        {
+            []string{
+                "2*4.",
+                "....",
+            },
+            8,
+        },
+        {
+            []string{
+                "..2*4",
+                ".....",
+            },
+            8,
+        },
+        {
+            []string{
+                "..10*",
+                "....9",
+            },
+            90,
+        },
+        {
+            []string{
+                "467.",
+                "...*",
+                "..35",
+            },
+            16345,
+        },
+        {
+            []string{
+                "467..114..",
+                "...*......",
+                "..35..633.",
+                "......#...",
+                "617*......",
+                ".....+.58.",
+                "..592.....",
+                "......755.",
+                "...$.*....",
+                ".664.598..",
+            },
+            467835,
+        },
+    }
+
+    for i, v := range testCases {
+        fmt.Printf("=================================\n")
+        fmt.Printf("TestCase %d\n", i)
+        matrix := createMatrix(v.lines)
+        sum := calculateSumB(matrix)
+
+        if sum != v.expected {
+            t.Errorf("Expected '%d', got '%d'\n", v.expected, sum)
+        } else {
+            fmt.Printf("PASS\n")
+        }
+        fmt.Printf("=================================\n")
+    }
+}
+
+func TestA(t *testing.T) {
     testCases := []struct {
         lines    []string
         expected int

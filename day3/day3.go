@@ -20,18 +20,21 @@ func main() {
         os.Exit(1)
     }
     defer file.Close()
-    res := a(file)
-    // res := b(file)
+    // res := a(file)
+    res := b(file)
     fmt.Printf("%d\n", res)
 }
 
 func b(file io.Reader) int {
     scanner := bufio.NewScanner(file)
-    sum := 0
+    matrix := [][]string{}
     for scanner.Scan() {
         line := scanner.Text()
-        fmt.Printf("%s\n", line)
+        arr := strings.Split(line, "")
+        matrix = append(matrix, arr)
     }
+
+    sum := calculateSumB(matrix)
 
     return sum
 }
@@ -55,6 +58,135 @@ func isDigit(s string) bool {
         return true
     }
     return false
+}
+
+type gear struct {
+    numberA int
+    numberB int
+}
+
+func calculateSumB(matrix [][]string) int {
+    sum := 0 
+
+    for y := 0; y < len(matrix); y++ {
+        for x := 0; x < len(matrix[y]); x++ {
+            xv := matrix[y][x]
+            if xv == "*" {
+                if gear, res := isGear(y,x,matrix); res {
+                    sum += (gear.numberA * gear.numberB)
+                }
+                
+            }
+        }
+    }
+
+    return sum
+}
+
+func readNumberInPos(y, x int, matrix [][]string) int {
+    line := matrix[y]
+    beginX := x
+
+    if x != 0 {
+        for i := x-1; i >= 0; i-- {
+            if !isDigit(line[i]) {
+                beginX = i+1
+                break
+            }
+            beginX = i
+        }
+    }
+
+    str := ""
+    idx := beginX;
+    digit := line[idx]
+
+    for isDigit(digit) {
+        str += digit
+        idx++
+        if idx == len(line) {
+            break
+        }
+        digit = line[idx]
+    }
+
+    val, _ := strconv.Atoi(str)
+    return val
+}
+
+func isGear(y, x int, matrix [][]string) (gear, bool)  {
+    //top left
+    dict := map[int]bool{}
+    if y-1 >= 0 && x-1 >= 0 {
+        if isDigit(matrix[y-1][x-1]) {
+            number := readNumberInPos(y-1,x-1,matrix)
+            dict[number] = true
+        }
+    }
+    //top
+    if y-1 >= 0 {
+        if isDigit(matrix[y-1][x]) {
+            number := readNumberInPos(y-1,x,matrix)
+            dict[number] = true
+        }
+    }
+    //top right
+    if y-1 >= 0 && x+1 < len(matrix[y]) {
+        if isDigit(matrix[y-1][x+1]) {
+            number := readNumberInPos(y-1,x+1,matrix)
+            dict[number] = true
+        }
+    }
+    //right
+    if x+1 < len(matrix[y]) {
+        if isDigit(matrix[y][x+1]) {
+            number := readNumberInPos(y,x+1,matrix)
+            dict[number] = true
+        }
+    }
+    //bottom right
+    if y+1 < len(matrix) && x+1 < len(matrix[y]) {
+        if isDigit(matrix[y+1][x+1]) {
+            number := readNumberInPos(y+1,x+1,matrix)
+            dict[number] = true
+        }
+    }
+    //bottom
+    if y+1 < len(matrix) {
+        if isDigit(matrix[y+1][x]) {
+            number := readNumberInPos(y+1,x,matrix)
+            dict[number] = true
+        }
+    }
+    //bottom left
+    if y+1 < len(matrix) && x-1 >= 0 {
+        if isDigit(matrix[y+1][x-1]) {
+            number := readNumberInPos(y+1,x-1,matrix)
+            dict[number] = true
+        }
+    }
+    //left
+    if x-1 >= 0 {
+        if isDigit(matrix[y][x-1]) {
+            number := readNumberInPos(y,x-1,matrix)
+            dict[number] = true
+        }
+    }
+
+    keys := []int{}
+    for k := range dict {
+        keys = append(keys, k)
+    }
+    if len(dict) == 2 {
+        g := gear {
+            numberA: keys[0],
+            numberB: keys[1],
+        }
+
+        return g, true
+    }
+    
+    return gear{}, false
 }
 
 func calculateSumA(matrix [][]string) int {
