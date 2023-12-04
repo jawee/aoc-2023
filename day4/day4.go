@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -18,8 +19,8 @@ func main() {
         os.Exit(1)
     }
     defer file.Close()
-    // res := a(file)
-    res := b(file)
+    res := a(file)
+    // res := b(file)
     fmt.Printf("%d\n", res)
 }
 
@@ -39,8 +40,33 @@ func a(file io.Reader) int {
     sum := 0
     for scanner.Scan() {
         line := scanner.Text()
-        fmt.Printf("%s\n", line)
+        sum += calculateASum(line)
     }
 
     return sum
 }
+
+func calculateASum(line string) int {
+    line = strings.Split(line, ":")[1]
+    numbers := strings.Split(line, "|")
+    correctNumbers := strings.Split(strings.Trim(numbers[0], " "), " ")
+    myNumbers := strings.Split(strings.Trim(numbers[1], " "), " ")
+
+    sum := 0
+    for _, vm := range myNumbers {
+        if vm == " " || vm == "" {
+            continue
+        }
+        for _, vc := range correctNumbers {
+            if vm == vc {
+                if sum == 0 {
+                    sum = 1
+                } else {
+                    sum *= 2
+                }
+            }
+        }
+    }
+    return sum
+}
+
