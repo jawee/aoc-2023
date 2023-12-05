@@ -20,8 +20,8 @@ func main() {
         os.Exit(1)
     }
     defer file.Close()
-    res := a(file)
-    // res := b(file)
+    // res := a(file)
+    res := b(file)
     fmt.Printf("%d\n", res)
 }
 
