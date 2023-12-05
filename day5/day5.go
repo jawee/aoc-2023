@@ -65,7 +65,7 @@ func b(file io.Reader) int {
         // fmt.Printf("CurrSeedsArr: %v\n", seedsArr)
         nextDest := []seedRange{}
         line = scanner.Text()
-        // fmt.Printf("Header: %s\n", line)
+        fmt.Printf("Header: %s\n", line)
         scanner.Scan()
         line = scanner.Text()
         destArr := []mapLine{}
