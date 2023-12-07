@@ -75,8 +75,6 @@ func a(file io.Reader) int {
         hands = append(hands, hand)
     }
 
-    fmt.Printf("%+v\n", hands)
-
     slices.SortStableFunc(hands, func(a, b hand) int {
         if isHigherRank(a, b) {
             return 1
@@ -84,10 +82,7 @@ func a(file io.Reader) int {
         return -1
     })
 
-    fmt.Printf("%+v\n", hands)
-
     for i := range hands {
-        fmt.Printf("%d * %d\n", (i+1), hands[i].bet)
         sum += (i+1) * hands[i].bet
     }
     return sum
@@ -97,7 +92,7 @@ func isHigherRank(higher, lower hand) bool {
     hType := getType(higher)
     lType := getType(lower)
     if hType < lType {
-        fmt.Printf("%s < %s\n", hType, lType)
+        // fmt.Printf("%s < %s\n", hType, lType)
         return true
     }
 
@@ -106,17 +101,17 @@ func isHigherRank(higher, lower hand) bool {
             h := higher.cards[i]
             l := lower.cards[i]
             if ranks[h] < ranks[l] {
-                fmt.Printf("%d < %d\n", ranks[h], ranks[l])
+                // fmt.Printf("%d < %d\n", ranks[h], ranks[l])
                 return true
             }
             if ranks[h] > ranks[l] {
-                fmt.Printf("%d > %d\n", ranks[h], ranks[l])
+                // fmt.Printf("%d > %d\n", ranks[h], ranks[l])
                 return false
             }
         }
     }
 
-    fmt.Printf("%s > %s\n", hType, lType)
+    // fmt.Printf("%s > %s\n", hType, lType)
     return false
 }
 
