@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"slices"
 	"strings"
 	"testing"
@@ -34,11 +35,12 @@ func TestSort(t *testing.T) {
 
     slices.SortFunc(hands, func(a, b hand) int {
         if isHigherRank(a, b) {
-            return -1
+            return 1
         }
-        return 1
+        return -1
     })
 
+    fmt.Printf("%+v\n", hands)
     if hands[0].bet != 765 {
         t.Fatalf("Failed on 0\n")
     }
