@@ -72,6 +72,16 @@ func TestIsHigherHandB(t *testing.T) {
             b: "AAAAA",
             exp: false,
         },
+        {
+            a: "33332",
+            b: "2AAAA",
+            exp: true,
+        },
+        {
+            a: "2222J",
+            b: "22222",
+            exp: false,
+        },
     }
 
     for i, v := range testCases {
@@ -189,6 +199,10 @@ func TestGetHandTypeB(t *testing.T) {
         {
             h: "Q2KJJ",
             exp: Three,
+        },
+        {
+            h: "J5J55",
+            exp: Five,
         },
     }
 
