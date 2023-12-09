@@ -14,6 +14,7 @@ func main() {
     pwd, _ := os.Getwd()
     // file, err := os.Open(pwd + "/day7/atest.txt")
     file, err := os.Open(pwd + "/day7/input.txt")
+    // file, err := os.Open(pwd + "/day7/btest.txt")
     
     if err != nil {
         fmt.Println(err)
@@ -52,6 +53,7 @@ func b(file io.Reader) int {
     })
 
     for i := range hands {
+        fmt.Printf("%d * %+v\n", (i+1), hands[i])
         sum += (i+1) * hands[i].bet
     }
     return sum

@@ -204,6 +204,10 @@ func TestGetHandTypeB(t *testing.T) {
             h: "J5J55",
             exp: Five,
         },
+        {
+            h: "QJJJA",
+            exp: Four,
+        },
     }
 
 
